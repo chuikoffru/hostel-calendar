@@ -1,0 +1,63 @@
+<template name="formBook">
+  <form class="row" id="new-booking">
+              <div class="form-group col-md-6">
+                <input type="date" name="checkin" placeholder="Заезд" class="form-control datetimepicker" required />
+              </div>
+              <div class="form-group col-md-6">
+                <input type="date" name="checkout" placeholder="Выезд" class="form-control datetimepicker" required />
+              </div>
+              <div class="form-group col-md-6">
+                <select name="room" id="room" class="form-control">
+                  <option>- Выберите комнату -</option>
+                  {{#each rooms}}
+                    <option>{{title}}</option>
+                  {{/each}}
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <select name="bed" id="bed" class="form-control">
+                  {{#each bed in beds.beds}}
+                    <option value="{{bed.num}}-{{bed.type}}">{{bed.name}}</option>
+                  {{/each}}
+                </select>
+              </div>
+              <div class="form-group col-md-12">
+                <button type="button" class="btn btn-default checkdate">Проверить места</button>
+              </div>
+              <div class="form-group col-md-6">
+                <input type="text" name="name" class="form-control" placeholder="ФИО" required>
+              </div>
+              <div class="form-group col-md-6">
+                <select name="source" id="source" class="form-control">
+                  <option>Выберите источник</option>
+                  <option value="other" class="source option-other">Другое</option>
+                  <option value="site" class="source option-site">Сайт</option>
+                  <option value="phone" class="source option-phone">Телефон</option>
+                  <option value="booking" class="source option-booking">Booking.com</option>
+                  <option value="airbnb" class="source option-airbnb">Airbnb.ru</option>
+                  <option value="ostrovok" class="source option-ostrovok">Островок.ру</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <input type="text" name="costs" class="form-control" placeholder="Сумма к оплате" required>
+              </div>
+              <div class="form-group col-md-4">
+                <select name="payment" id="payment" class="form-control">
+                  <option>Наличные</option>
+                  <option>Безналичные</option>
+                  <option>Перевод VISA</option>
+                  <option>Терминал</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <select name="paymented" id="paymented" class="form-control">
+                  <option>Не оплачено</option>
+                  <option>Оплачено частично</option>
+                  <option>Оплачено полностью</option>
+                </select>
+              </div>
+              <div class="form-group col-md-12">
+                <button type="submit" class="btn btn-default btn-success">Добавить</button>
+              </div>
+    </form>
+</template>

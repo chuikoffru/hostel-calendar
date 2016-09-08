@@ -1,0 +1,60 @@
+<body>
+  <div class="container-fluid">
+    <section class="row">
+      <div class="col-md-6">
+        <ul class="nav nav-tabs nav-pills" role="tablist">
+          <li role="presentation" class="active"><a href="#statistic" aria-controls="statistic" role="tab" data-toggle="tab">Статистика</a></li>
+          <li role="presentation"><a href="#add" aria-controls="add" role="tab" data-toggle="tab">Добавить бронь</a></li>
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="statistic">
+            {{>stat}}
+          </div>
+          <div role="tabpanel" class="tab-pane" id="add">
+            {{>formBook}}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+          {{>data}}
+      </div>
+    </section>
+    {{#each room in rooms}}
+    <table border="1" width="100%" class="calendar">
+      <thead>
+        <tr>
+          <td width="130">{{room.title}}</td>
+          {{#each day in days}}
+          <td>{{realDay day}}</td>
+          {{/each}}
+        </tr>
+      </thead>
+      <tbody>
+        {{#each bed in room.beds}}
+        <tr>
+            <td class="beds-name">
+              {{#if bed.type}}
+                <i class="bed-type top"></i>
+                {{else}}
+                <i class="bed-type bottom"></i>
+              {{/if}}
+              <span>{{bed.name}}</span>
+            </td>
+            {{#each day in bookingDays bed room.title}}
+            <td colspan="{{day.diff}}">
+              {{#if day.diff}}
+                <div class="width-day {{existbook day.name}} {{srcolor day.source}}" id="{{day.id}}">
+                  <p>{{day.name}}</p>
+                </div>
+              {{else}}
+              <input type="checkbox" value="{{day.num}}-{{bed.num}}-{{bed.type}}-{{room._id}}" class="checkday">
+              {{/if}}
+            </td>
+            {{/each}}
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    {{/each}}
+  </div>
+</body>

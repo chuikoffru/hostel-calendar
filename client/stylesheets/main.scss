@@ -1,0 +1,123 @@
+body {
+    overflow-x : hidden;
+}
+.calendar {
+    margin-bottom: 40px;
+    border-color: #ccc;
+    table-layout: fixed;
+    thead {
+        font-weight: bolder;
+        text-align: center;
+        font-size: 0.95em;
+    }
+
+    tbody {
+        tr {
+            td {
+                height: 30px;
+                border-color: #ccc;
+                .existbook {
+                    font-size: 11px;
+                    line-height: 120%;
+                    overflow: hidden;
+                    height: 34px;
+                    padding: 3px 5px;
+                    border-radius: 15px;
+                    text-align: center;
+                    position: relative;
+                }
+            }
+
+            td.beds-name {
+                text-align: center;
+                font-weight: bolder;
+                text-transform: uppercase;
+                span {
+                    font-size: 0.8em;
+                    vertical-align: baseline;
+                    padding: 3px;
+                }
+            }
+        }
+    }
+}
+
+.source {
+    color: #fff;
+    padding: 5px;
+}
+
+.option-other {
+    background-color: #ccc;
+    color: rgb(57,55,62);
+    padding: 5px;
+}
+
+.option-site {
+    background-color: rgb(189,55,104);
+    color: #fff;
+}
+
+.option-phone {
+    background-color: rgb(247,174,50);
+    color: rgb(57,55,62);
+}
+
+.option-booking {
+    background-color: rgb(0,52,126);
+    color: #fff;
+}
+
+.option-airbnb {
+    background-color: rgb(255,90,95);
+    color: #fff;
+}
+
+.option-ostrovok {
+    background-color: rgb(24,113,188);
+    color: #fff;
+}
+
+.width-day {
+    margin-left: 2.5em;
+    width: 100%;
+    position: absolute;
+    overflow: hidden;
+    padding-right: 50px;
+    cursor: pointer;
+}
+
+.bed-type {
+    display: inline-block;
+    vertical-align: middle;
+    background-image: url('./img/sm-bunk-bed.png');
+    background-size: cover;
+    height: 25px;
+    width: 25px;
+    margin: 2px 0px 2px 4px;
+}
+
+.bed-type.bottom {
+    background-position: 25px;
+}
+
+.bed-type.top {
+    background-position: 0px;
+}
+
+.checkday {
+    visibility: hidden;
+}
+
+.jumbotron {
+    padding: 1px 10px 25px 5px;
+}
+
+.nav-tabs {
+    border-bottom: 0;
+    margin-bottom: 25px;
+}
+
+.m-t-10 {
+    margin-top: 50px;
+}

@@ -1,0 +1,10 @@
+<template name="data">
+  {{#if book}}
+  <div class="jumbotron m-t-10">
+    <h2>{{book.name}} в &laquo;{{book.room}}&raquo;</h2>
+    <p>Даты: {{book.checkin}} - {{book.checkout}}</p>
+    <p>Источник: {{book.source}}</p>
+    <button type="button" class="btn btn-large btn-danger" data-id="{{book._id}}">Удалить бронь</button>
+  </div>
+  {{/if}}
+</template>
