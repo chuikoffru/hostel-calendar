@@ -25,7 +25,7 @@
         <tr>
           <td width="130">{{room.title}}</td>
           {{#each day in days}}
-          <td>{{realDay day}}</td>
+          <td class="{{currentToDate(realDay day)}}">{{realDay day}}</td>
           {{/each}}
         </tr>
       </thead>
@@ -41,7 +41,7 @@
               <span>{{bed.name}}</span>
             </td>
             {{#each day in bookingDays bed room.title}}
-            <td colspan="{{day.diff}}">
+            <td colspan="{{day.diff}}" class="{{currentToDate day.num}}">
               {{#if day.diff}}
                 <div class="width-day {{existbook day.name}} {{srcolor day.source}}" id="{{day.id}}">
                   <p>{{day.name}}</p>

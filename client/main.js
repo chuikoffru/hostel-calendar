@@ -18,3 +18,9 @@ Template.registerHelper('srcolor', function(source) {
 Template.registerHelper('getCurrentMonth', function() {
   return new Date().getMonthName('ru');
 });
+
+Template.registerHelper('currentToDate', function(today) {
+  let d = new Date();
+  let cd = d.getDate() < 9 ? '0' + d.getDate() : d.getDate();
+  return today == cd ? 'current-date' : '';
+});

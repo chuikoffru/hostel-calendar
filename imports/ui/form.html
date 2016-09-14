@@ -1,28 +1,28 @@
 <template name="formBook">
-  <form class="row" id="new-booking">
-              <div class="form-group col-md-6">
-                <input type="date" name="checkin" placeholder="Заезд" class="form-control datetimepicker" required />
-              </div>
-              <div class="form-group col-md-6">
-                <input type="date" name="checkout" placeholder="Выезд" class="form-control datetimepicker" required />
-              </div>
-              <div class="form-group col-md-6">
+  <form class="row" id="new-booking" name="newBooking">
+              <div class="form-group col-md-3">
                 <select name="room" id="room" class="form-control">
                   <option>- Выберите комнату -</option>
                   {{#each rooms}}
-                    <option>{{title}}</option>
+                    <option {{curRoom title}}>{{title}}</option>
                   {{/each}}
                 </select>
               </div>
-              <div class="form-group col-md-6">
-                <select name="bed" id="bed" class="form-control">
-                  {{#each bed in beds.beds}}
-                    <option value="{{bed.num}}-{{bed.type}}">{{bed.name}}</option>
-                  {{/each}}
-                </select>
+              <div class="form-group col-md-3">
+                <input type="date" name="checkin" placeholder="Заезд" class="form-control datetimepicker" required />
+              </div>
+              <div class="form-group col-md-3">
+                <input type="date" name="checkout" placeholder="Выезд" class="form-control datetimepicker" required />
+              </div>
+              <div class="form-group col-md-3">
+                <button type="button" class="btn btn-default btn-block checkdate">Проверить места</button>
               </div>
               <div class="form-group col-md-12">
-                <button type="button" class="btn btn-default checkdate">Проверить места</button>
+                <div class="row">
+                  {{#each bed in beds.beds}}
+                    {{>checkbed bed}}
+                  {{/each}}
+                </div>
               </div>
               <div class="form-group col-md-6">
                 <input type="text" name="name" class="form-control" placeholder="ФИО" required>
@@ -57,7 +57,16 @@
                 </select>
               </div>
               <div class="form-group col-md-12">
+                <button type="reset" class="btn btn-default">Сбросить</button>
                 <button type="submit" class="btn btn-default btn-success">Добавить</button>
               </div>
     </form>
+</template>
+
+<template name="checkbed">
+    <div class="col-md-2">
+      <label>
+        <input type="checkbox" name="bed[]" value="{{num}}-{{type}}"> {{this.name}}
+      </label>
+    </div>
 </template>

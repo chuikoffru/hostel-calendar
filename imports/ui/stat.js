@@ -25,11 +25,18 @@ Template.stat.helpers({
 
         rooms.map((room) => {
 
-            //let query = Booking.find({room : room.title});
+            let query = Booking.find({
+                room : room.title,
+                days : {
+                    $in : [moment().format("DD-MM-YYYY")]
+                }
+            });
 
             data.push({
                 name : room.title,
-                all : room.beds.length
+                all : room.beds.length,
+                closed : query.count(),
+                free : room.beds.length - query.count()
             })
         });
 

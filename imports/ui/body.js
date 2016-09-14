@@ -8,14 +8,6 @@ import serialize from 'form-serialize';
 
 import './body.html';
 
-Template.body.onRendered(()=>{
-  $('.datetimepicker').datetimepicker({
-    locale: 'ru',
-    viewMode: 'months',
-    format: 'DD-MM-YYYY'
-  });
-});
-
 Template.body.helpers({
 
   rooms() {

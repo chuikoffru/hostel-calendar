@@ -8,6 +8,14 @@ import serialize from 'form-serialize';
 
 import './data.html';
 
+Template.data.onRendered(()=>{
+  $('.datetimepicker').datetimepicker({
+    locale: 'ru',
+    viewMode: 'months',
+    format: 'DD-MM-YYYY'
+  });
+});
+
 Template.data.helpers({
     book: function() {
         return Booking.findOne({_id : Session.get('removeBook')});

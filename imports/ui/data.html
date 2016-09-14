@@ -1,8 +1,18 @@
 <template name="data">
   {{#if book}}
-  <div class="jumbotron m-t-10">
+  <div>
     <h2>{{book.name}} в &laquo;{{book.room}}&raquo;</h2>
-    <p>Даты: {{book.checkin}} - {{book.checkout}}</p>
+    <form class="row">
+      <div class="form-group col-md-6">
+        <input type="date" name="checkin" value="{{book.checkin}}" class="form-control datetimepicker">
+      </div>
+      <div class="form-group col-md-6">
+        <input type="date" name="checkout" value="{{book.checkout}}" class="form-control datetimepicker">
+      </div>
+      <div class="form-group col-md-12">
+        <button type="submit" class="btn btn-default">Сохранить</button>
+      </div>
+    </form>
     <p>Источник: {{book.source}}</p>
     <button type="button" class="btn btn-large btn-danger" data-id="{{book._id}}">Удалить бронь</button>
   </div>

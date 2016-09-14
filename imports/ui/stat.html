@@ -1,6 +1,8 @@
 <template name="stat">
-  <h3>Статистика на {{toDay}} ({{getCurrentMonth}})</h3>
+  <h4>Статистика на {{toDay}} ({{getCurrentMonth}})</h4>
   <p>Заездов сегодня: {{checkinToday}}</p>
   <p>Выездов сегодня: {{checkoutToday}}</p>
-  
+  {{#each freeRooms}}
+  <p>{{name}} {{closed}}/{{all}}. Свободно {{free}} мест.</p>
+  {{/each}}
 </template>
