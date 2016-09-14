@@ -8,6 +8,8 @@ import serialize from 'form-serialize';
 
 import './body.html';
 
+let curMonth = new ReactiveVar(moment().format('MM'));
+
 Template.body.helpers({
 
   rooms() {
@@ -20,6 +22,18 @@ Template.body.helpers({
     let days = [...Array(d.daysInMonth()).keys()];
 
     return days;
+  },
+
+  listOfMonth() {
+    let listmonths = [];
+    for(i=0;i<12;i++) {
+      listmonths.push({
+        num : moment().month(i).format('MM'),
+        name : moment().month(i).format('MMMM'),
+        selected : moment().format('MM') == moment().month(i).format('MM') ? 'selected' : ''
+      })
+    }
+    return listmonths;
   },
 
   bookingDays(bed, name) {
@@ -41,7 +55,7 @@ Template.body.helpers({
 
       //форматируем текущее число даты в формат 01-12
       let cd = day < 9 ? '0' + (day+1) : day + 1;
-      let current = `${cd}-${m}-${y}`;
+      let current = `${cd}-${curMonth.get()}-${y}`;
 
       //Ищем в базе данных брони дата которых начинается с текущей даты
       let query = Booking.findOne({room : name, 'bed.num' : bed.num, 'bed.type' : bed.type, checkin : current, active : 1});
@@ -90,6 +104,9 @@ Template.body.helpers({
 Template.body.events({
   'click .width-day' : (event) => {
     Session.set('removeBook', event.currentTarget.id);
+  },
+  'change #current-month' : (event) => { 
+    curMonth.set(event.target.value)
   }
 });
 

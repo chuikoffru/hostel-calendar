@@ -19,6 +19,25 @@
           {{>data}}
       </div>
     </section>
+
+    <section class="row">
+      <div class="col-md-1">
+        <select name="month" id="current-month">
+          {{#each listOfMonth}}
+          <option value="{{num}}" {{selected}}>{{name}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="col-md-1">
+        <label for="archived">
+          <input type="checkbox" name="archived" id="archived" value="0"> Показать архив
+        </label>
+      </div>
+      <div class="col-md-10">
+
+      </div>
+    </section>
+    
     {{#each room in rooms}}
     <table border="1" width="100%" class="calendar">
       <thead>

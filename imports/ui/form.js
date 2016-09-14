@@ -84,6 +84,7 @@ Template.formBook.events({
 
     let check = Booking.find({
       room : data.room,
+      active : 1,
       days : {
         $in : arrayBtwDates(data.checkin, data.checkout)
       }
