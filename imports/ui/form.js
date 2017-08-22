@@ -4,16 +4,15 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Booking } from '../api/booking.js';
 import { Rooms } from '../api/rooms.js';
 
-import serialize from 'form-serialize';
-
 import './form.html';
 
 import arrayBtwDates from '../libs/arrayBtwDates';
+import parseBed from '../libs/parseBeds';
+import getFormData from '../libs/getFormData';
+import splitDaysByMonth from '../libs/splitDaysByMonth';
 
 Template.formBook.onCreated(function(){
 
-  this.showBeds = new ReactiveVar(false);
-  this.freeBeds = new ReactiveVar();
 });
 
 Template.formBook.onRendered(()=>{
@@ -29,18 +28,10 @@ Template.formBook.helpers({
     return Rooms.find({}, {sort : {position : -1}})
   },
   beds() {
-    let data = Rooms.findOne({title : Session.get('room')});
-    Template.instance().freeBeds.set(data);
-    return data;
+    return Rooms.findOne({title : Session.get('room')});
   },
   curRoom(title) {
     return Session.equals('room', title) ? 'selected' : '';
-  },
-  showBeds() {
-    return Template.instance().showBeds.get();
-  },
-  getFreeBeds() {
-    return Template.instance().freeBeds.get();
   }
 });
 
@@ -48,28 +39,55 @@ Template.formBook.events({
   'submit form' : (event) => {
 		event.preventDefault();
 
-    var form = document.querySelector('#new-booking');
+    //Получаем данные формы
+		let data = getFormData('#new-booking');
 
-		let data = serialize(form, { hash: true });
-
+    //Делим общую стоимость на количество забронированных мест
     data.costs = parseInt(data.costs) / parseInt(data.bed.length);
 
+    //Проходим по всем выбранным местам для добавления брони
     data.bed.map((item) => {
 
-      let bed = item.split('-');
+      //Получаем массив дат
+      let days = arrayBtwDates(data.checkin, data.checkout);
 
-      let newdata = data;
+      //Здесь нужно разделить массив с датами на два массива в случае перехода на другой месяц
+      //И создать несколько связанных броней на один месяц и на другой
+      let booking = splitDaysByMonth(days);
 
-      newdata.active = 1;
+      let id;
 
-      newdata.bed = {
-       num : parseInt(bed[0]),
-       type : parseInt(bed[1])
-      }
+      booking.month.map((b) => {
 
-      newdata.days = arrayBtwDates(newdata.checkin, newdata.checkout);
+        //Создаем новый массив данных бронирования
+        let newdata = data;
 
-      Booking.insert(newdata);
+        //Делаем бронь активной и доступной для обзора
+        newdata.active = 1;
+
+        //Получаем номер и тип кровати
+        newdata.bed = parseBed(item);
+
+        //Записываем все даты пребывания
+        newdata.days = booking[b];
+
+        //Записываем дату начала и дату конца каждой из броней
+        newdata.checkin = booking[b][0];
+        newdata.checkout = booking[b][booking[b].length - 1];
+
+        console.log(newdata);
+
+        //Если была добавлена уже часть брони, то в новой брони делаю ссылку на предыдущую
+        if(id) {
+          newdata.connected = id;
+          let nid = Booking.insert(newdata);
+          Booking.update(id, {$set : {connect : nid}});
+          id = nid;
+        } else {
+          id = Booking.insert(newdata);
+        }
+
+      });
 
     });
 
@@ -78,9 +96,8 @@ Template.formBook.events({
     Session.set('room', event.target.value);
   },
   'click .checkdate' : (event, template) => {
-    var form = document.querySelector('#new-booking');
 
-		let data = serialize(form, { hash: true });
+		let data = getFormData('#new-booking');
 
     let check = Booking.find({
       room : data.room,
@@ -96,11 +113,5 @@ Template.formBook.events({
       $(`input[type=checkbox][value=${item.bed.num}-${item.bed.type}]`).attr('disabled', true).attr('selected', true)
     });
 
-  }
-});
-
-Template.checkbed.helpers({
-  bedDisabled(bed) {
-    return "disabled";
   }
 });

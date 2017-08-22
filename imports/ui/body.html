@@ -28,12 +28,12 @@
           {{/each}}
         </select>
       </div>
-      <div class="col-md-1">
+      <div class="col-md-2">
         <label for="archived">
           <input type="checkbox" name="archived" id="archived" value="0"> Показать архив
         </label>
       </div>
-      <div class="col-md-10">
+      <div class="col-md-9">
 
       </div>
     </section>
@@ -62,7 +62,7 @@
             {{#each day in bookingDays bed room.title}}
             <td colspan="{{day.diff}}" class="{{currentToDate day.num}}">
               {{#if day.diff}}
-                <div class="width-day {{existbook day.name}} {{srcolor day.source}}" id="{{day.id}}">
+                <div class="width-day {{existbook day.name}} {{srcolor day.source}} {{connect day.connect day.connected}}" id="{{day.id}}" style="width:{{widthDay day.diff}}px;">
                   <p>{{day.name}}</p>
                 </div>
               {{else}}

@@ -76,7 +76,11 @@ Template.body.helpers({
           name : query.name,
           diff : diff,
           source : query.source,
-          id : query._id
+          id : query._id,
+          connect : query.connect,
+          connected : query.connected,
+          paymented : query.paymented,
+          costs : query.costs
         })
 
         //Указываем сколько клеток пропустить в будущем

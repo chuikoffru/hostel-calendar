@@ -26,6 +26,16 @@ body {
                     text-align: center;
                     position: relative;
                 }
+                .connected {
+                    margin-left: 0;
+                    border-bottom-left-radius: 0;
+                    border-top-left-radius: 0;
+                    width: 125%;
+                }
+                .connect {
+                    border-bottom-right-radius: 0;
+                    border-top-right-radius: 0;
+                }
             }
 
             td.beds-name {
@@ -125,3 +135,4 @@ body {
 .current-date {
     background-color: #dff6df;
 }
+

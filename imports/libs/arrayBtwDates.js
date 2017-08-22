@@ -1,19 +1,18 @@
-export default (st, fi) => {
+//Формируем массив дней из разницы дней
 
-    let result = [];
+export default (st, fi) => {
 
     //Форматируем даты начала и конца бронирования
     let start = moment(st, "DD-MM-YYYY");
     let end = moment(fi, "DD-MM-YYYY");
-
-    //Получаем разницу в днях
-    let m = start.toObject().months < 10 ? '0' + (start.toObject().months+1) : start.toObject().months + 1;
-
-    for(i = start.toObject().date ; i < end.toObject().date ; i++) {
-      let date = i < 10 ? '0' + i : i;
-      let cd = `${date}-${m}-${start.toObject().years}`
-      result.push(cd); 
+    //Получаем разницу в количестве дней
+    let diff = end.diff(start, 'days');
+    //Добавляем первый день в новый массив
+    let result = [];
+    result.push(start.format('DD-MM-YYYY'));
+    //Прибавляем к начальному дню по одному дню в цикле
+    for(i=0;i<diff;i++) {
+        result.push(start.add(1, 'd').format('DD-MM-YYYY'))
     }
-
     return result;
 }

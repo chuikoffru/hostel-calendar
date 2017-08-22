@@ -10,13 +10,16 @@ import './stat.html';
 
 Template.stat.helpers({
     checkinToday() {
-        return Booking.find({checkin : moment().format('DD-MM-YYYY')}).count();
+        return Booking.find({checkin : moment().format('DD-MM-YYYY'), active : 1}).count();
     },
     checkoutToday() {
-        return Booking.find({checkout : moment().format('DD-MM-YYYY')}).count();
+        return Booking.find({checkout : moment().format('DD-MM-YYYY'), active : 1}).count();
     },
     toDay() {
         return moment().format("DD-MM-YYYY");
+    },
+    getCurrentMonth() {
+        return moment().format("MMMM");
     },
     freeRooms() {
         let data = [];
@@ -26,6 +29,7 @@ Template.stat.helpers({
         rooms.map((room) => {
 
             let query = Booking.find({
+                active : 1,
                 room : room.title,
                 days : {
                     $in : [moment().format("DD-MM-YYYY")]

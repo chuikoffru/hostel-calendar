@@ -15,8 +15,18 @@ Template.registerHelper('srcolor', function(source) {
   return 'option-' + source;
 });
 
-Template.registerHelper('getCurrentMonth', function() {
-  return new Date().getMonthName('ru');
+Template.registerHelper('widthDay', function(int) {
+  return parseFloat(int) * 55;
+});
+
+Template.registerHelper('connect', function(connect, connected) {
+  if(connect) {
+    return 'connect';
+  } else if(connected) {
+    return 'connected';
+  } else {
+    return 'notconnect';
+  }
 });
 
 Template.registerHelper('currentToDate', function(today) {
